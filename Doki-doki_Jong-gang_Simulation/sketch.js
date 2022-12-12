@@ -357,6 +357,7 @@ function draw() {
       break;
     case border+1: 
       alpha = 255;
+      noTint();
       image(beforeSelect[1][2], 0, 0);
       talkTime();
       break;
@@ -492,6 +493,7 @@ function draw() {
       break;
     case border2+1:
       alpha = 255;
+      noTint();
       if(frameCount % 20 < 10){
         image(beforeSelect[2][3],0,0);
       } else {
@@ -661,6 +663,7 @@ function draw() {
       break;
     case border3+1:
       alpha = 255;
+      noTint();
       image(beforeSelect[3][2],0,0);
       talkTime();
       break;
@@ -817,6 +820,7 @@ function draw() {
       break;
     case border4+1:
       alpha = 255;
+      noTint();
       image(beforeSelect[5][2],0,0);
       talkTime();
       break;
@@ -969,6 +973,7 @@ function draw() {
       break;
     case border5+1: 
       alpha = 255; 
+      noTint();
       image(choosingtime[2],0,0);
       talkTime();
       break;
@@ -1229,6 +1234,8 @@ function draw() {
       juneLove = 0;
       late = 0;
       x = 0;
+      bar = 800;
+      alpha = 255;
       pg_drawing.clear();
       bgm(0);
       for(let i = 1; i<soundAssets.length; i++){
@@ -1617,6 +1624,8 @@ function keyPressed() {
     juneLove = 0;
     late = 0;
     x = 0;
+    bar = 800;
+    alpha = 255;
     pg_drawing.clear();
     bgm(0);
     for(let i = 1; i<soundAssets.length; i++){
