@@ -354,6 +354,7 @@ function draw() {
     
     case border+0: // week 1
       setNumber(0);
+      loveTiming = 100;
       if (alpha>0){
         image(beforeSelect[1][1], 0, 0);  
         tint(255,alpha);
@@ -989,7 +990,6 @@ function draw() {
         break;
       case 19:
         image(answer[5][3][4],0,0);
-        profDown();
         afterAnswer();
         break;
       case 20:
@@ -998,9 +998,9 @@ function draw() {
         break;
       case 21:
         image(answer[5][3][6],0,0);
-        profDown(0, 17);
-        teamDown(20, 37);
+        profDown();
         answerR();
+        b1 = new Button(0,0,width,height);
         break;
     }
       break;
@@ -1548,66 +1548,66 @@ function bgm(i) {
 }
 
 function profUp(min, max){
-  if (alpha>0){
+  if (loveTiming == 100){
+    profLove += 1;
+    loveTiming -= 5;
     // image(timeTracker, -1000, -540, 1, 1);
     // frame = timeTracker.getCurrentFrame();
     // if(frame >= min && frame < max){
-    alpha -= 5;
-  } else if (alpha == 0) {
-  profLove += 1;
-  alpha -= 5;
+  } else if (loveTiming >= 50) {
+    loveTiming -= 5;
   } else {
     image(blackOpacity,0,0);
     image(loveUp[0], 0, 0);
     image(loveUp[2], 0, -(frameCount%40/5));
     image(loveUp[3], 0, -(frameCount%40/5));
-    alpha -= 5;
+    loveTiming -= 5;
   }
 }
 // }
 function profDown(min, max){
-  if (alpha>0){
-    alpha -=5;
-  } else if (alpha == 0){
-  profLove -= 1;
-  alpha -= 5;
+  if (loveTiming == 100){
+    profLove -= 1;
+    loveTiming -=5;
+  } else if (loveTiming >= 50){
+  loveTiming -= 5;
   } else {
     image(blackOpacity,0,0);
     image(loveDown[0], 0, 0);
     image(loveDown[2], 0, (frameCount%40/5));
     image(loveDown[3], 0, (frameCount%40/5));
-    alpha -=5;
+    loveTiming -=5;
   }
 }
 function teamUp(min, max){
-  if (alpha>0){
+  if (loveTiming == 100){
     // image(timeTracker, -1000, -540, 1, 1);
     // frame = timeTracker.getCurrentFrame();
     // if(frame >= min && frame < max){
-    alpha -= 5;
-  } else if (alpha == 0) {
-  juneLove += 1;
-  alpha -= 5;
+    juneLove += 1;
+    loveTiming -= 5;
+  } else if (loveTiming >= 50) {
+  loveTiming -= 5;
   } else {
     image(blackOpacity,0,0);
     image(loveUp[1], 0, 0);
     image(loveUp[2], 0, -(frameCount%40/5));
     image(loveUp[3], 0, -(frameCount%40/5));
-    alpha -= 5;
+    loveTiming -= 5;
   }
 }
 function teamDown(min, max){
-  if (alpha>0){
-    alpha -=5;
-  } else if (alpha == 0){
-  juneLove -= 1;
-  alpha -= 5;
+  if (loveTiming == 100){
+    juneLove -= 1;
+    loveTiming -=5;
+  } else if (loveTiming >= 50){
+  loveTiming -= 5;
   } else {
     image(blackOpacity,0,0);
     image(loveDown[1], 0, 0);
     image(loveDown[2], 0, (frameCount%40/5));
     image(loveDown[3], 0, (frameCount%40/5));
-    alpha -=5;
+    loveTiming -=5;
   }
 }
 
