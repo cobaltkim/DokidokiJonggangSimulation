@@ -9,8 +9,8 @@ class Presentation{
   
   show(){
     noStroke();
+    noFill();
     rectMode(CORNER);
-    fill(255);
     rect(this.x, this.y, this.xpos, this.ypos);
     if (this.x<mouseX && mouseX<this.x+this.xpos && this.y<mouseY && mouseY<this.y+this.ypos){
       fill(0);

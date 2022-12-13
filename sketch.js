@@ -45,6 +45,7 @@ let answer = [];
 let choosingtime = [];
 let ending = [];
 let endingCredit;
+let sketchbook;
 let lastButton;
 let week5game = [];
 let week5gameEx;
@@ -60,6 +61,7 @@ let select = [];
 for (let i=1; i<6; i++){
   select[i] = [];
 }
+let gameStuStart = []; let gameStuIng = []; let gameStuEnd = [];
 let bone;
 let clock;
 let particles = [];
@@ -68,6 +70,7 @@ let lightsY = [];
 let lightsR = [];
 let loveUp =[];
 let loveDown =[];
+let loveTiming = 100;
 
 let soundAssets = [];
 
@@ -160,6 +163,11 @@ for (let i=1; i<5; i++){
   week5gameEx = loadImage('assets/Week5/Week5_Game_HowtoPlay.png');
   choosingtime[1] = loadImage('assets/Week5/choosingtime_1.png');
   choosingtime[2] = loadImage('assets/Week5/choosingtime_2.png');
+  for(let i=1; i<8; i++){
+    gameStuStart[i] = loadImage('assets/Week5/Week5_Game_'+i+'_start.png');
+    gameStuIng[i] = loadImage('assets/Week5/Week5_Game_'+i+'_ing.png');
+    gameStuEnd[i] = loadImage('assets/Week5/Week5_Game_'+i+'_end.png');
+  }
   for (let i=1; i<11; i++){
     ending[1][i] = loadImage('assets/Ending/ending_1_'+i+'.png')
   }
@@ -177,6 +185,7 @@ for (let i=1; i<5; i++){
   }
   endingCredit = loadImage('assets/Ending/endingcredits_re.png');
   lastButton = loadImage('assets/Ending/lastbutton.png');
+  sketchbook = loadImage('assets/sketchbook.png')
 
 bone = loadImage('assets/ui_bone.PNG');
 clock = loadImage('assets/ui_late.PNG');
@@ -211,10 +220,12 @@ soundAssets[18] = loadSound('assets/sound/pointCard.mp3'); //w5Game
 soundAssets[19] = loadSound('assets/sound/tongTong.mp3');//w5Best
 soundAssets[20] = loadSound('assets/sound/retroGamer.mp3'); //w5GameSoso
 soundAssets[21] = loadSound('assets/sound/boubleGum.mp3'); //w5GameWorst
-soundAssets[22] = loadSound('assets/sound/funkyAction.mp3'); //endingExit
+soundAssets[22] = loadSound('assets/sound/funkyAction.mp3'); //enidngSelect
 soundAssets[23] = loadSound('assets/sound/rainbow.mp3'); //endingProf
 soundAssets[24] = loadSound('assets/sound/hideSeek.mp3'); //endingTeam
-soundAssets[25] = loadSound('assets/sound/loveMe.mp3'); //endingTogether
+soundAssets[25] = loadSound('assets/sound/funkyAction.mp3'); //endingExit
+soundAssets[26] = loadSound('assets/sound/loveMe.mp3'); //endingTogether
+soundAssets[27] = loadSound('assets/sound/comic.mp3'); //endingLate
 }
 
 function setup() {
@@ -380,10 +391,12 @@ function draw() {
         break;
       case 1:
         image(answer[1][4][2],0,0);
+        profDown(0, 17);
         afterAnswer();
         break;
       case 2 :
         image(answer[1][4][3],0,0);
+        loveTiming = 100;
         afterAnswer();
         break;
       case 3:
@@ -391,10 +404,10 @@ function draw() {
         image(answer[1][4][4],0,0);
         frame = timeTracker.getCurrentFrame();
         if(frame >= 0){
-          profDown(0, 17);
           teamDown(20, 37);
         }
         timeOver();
+        buttonR = new Button(0,0,width,height);
         break;
     }
     break;
@@ -425,6 +438,7 @@ function draw() {
             profUp(0, 35);
           }
           answerL();
+          buttonM = new Button(0,0,width,height);
           break;
       }
       break;
@@ -437,10 +451,12 @@ function draw() {
           break;
         case 1:
           image(answer[1][2][2],0,0);
+          profDown(0,17);
           afterAnswer();
           break;
         case 2:
           image(answer[1][2][3],0,0);
+          loveTiming = 100;
           afterAnswer();
           break;
         case 3:
@@ -448,10 +464,10 @@ function draw() {
           image(answer[1][2][4],0,0);
           frame = timeTracker.getCurrentFrame();
           if(frame >= 0){
-            profDown(0, 17);
             teamDown(20, 37);
           }
           answerM();
+          buttonL = new Button(0,0,width,height);
           break;
       }
       break;
@@ -475,6 +491,7 @@ function draw() {
 
     case border2: // week 2
       setNumber(5);
+      loveTiming = 100;
       if (alpha>0){
         image(beforeSelect[2][1], 0, 0);  
         tint(255,alpha);
@@ -557,6 +574,7 @@ function draw() {
           profDown(0, 35);
         }
         timeOver();
+        buttonR = new Button(0,0,width,height);
         break;
     }
     break;
@@ -583,6 +601,7 @@ function draw() {
             profDown(0, 35);
           }
           answerL();
+          buttonM = new Button(0,0,width,height);
           break;
       }
       break;
@@ -613,6 +632,7 @@ function draw() {
             teamUp(0,35);
           }
           answerM();
+          buttonL = new Button(0,0,width,height);
           break;
       }
       break;
@@ -643,12 +663,14 @@ function draw() {
             profUp(0, 35);
           }
           answerR();
+          b1 = new Button(0,0,width,height);
           break;
       }
       break;
 
     case border3: // week3
       setNumber(10);
+      loveTiming = 100;
       if (alpha>0){
         image(beforeSelect[3][1], 0, 0);  
         tint(255,alpha);
@@ -716,6 +738,7 @@ function draw() {
             teamDown(0, 35);
           }
           timeOver();
+          buttonR = new Button(0,0,width,height);
           break;
       }break;
   
@@ -770,6 +793,7 @@ function draw() {
               teamDown(0, 35);
             }
             answerM();
+            buttonL = new Button(0,0,width,height);
             break;
         }
         break;
@@ -793,19 +817,25 @@ function draw() {
             afterAnswer();
             break;
           case 14:
-            image(timeTracker, -1200, -500, 1, 1);
             image(answer[3][3][5],0,0);
+            afterAnswer();
+            break;
+          case 15:
+            image(timeTracker, -1200, -500, 1, 1);
+            image(answer[3][3][6],0,0);
             frame = timeTracker.getCurrentFrame();
             if(frame >= 0){
               teamUp(0, 35);
             }
             answerR();
+            b1 = new Button(0,0,width,height);
             break;
         }
         break;
 
     case border4: // week 4
-      setNumber(15);
+      setNumber(16);
+      loveTiming = 100;
       if (alpha>0){
         image(beforeSelect[5][1], 0, 0);  
         tint(255,alpha);
@@ -849,22 +879,26 @@ function draw() {
     case border4+6:
       image(week5game[0],0,0);
       gameTime();
-      stu[1] = new Presentation(600, 850, 100, 100, score[1]);
-      stu[2] = new Presentation(1400, 850, 100, 100, score[2]);
-      stu[3] = new Presentation(700, 700, 80, 80, score[3]);
-      stu[4] = new Presentation(1300, 700, 80, 80, score[4]);
-      stu[5] = new Presentation(800, 550, 60, 60, score[5]);
-      stu[6] = new Presentation(1200, 550, 60, 60, score[6]);
-      stu[7] = new Presentation(width/2, 400, 50, 50, score[7]);
+      stu[1] = new Presentation(175, 405, 400, 475, score[1]);
+      stu[2] = new Presentation(1280, 375, 350, 515, score[2]);
+      stu[3] = new Presentation(490, 375, 230, 260, score[3]);
+      stu[4] = new Presentation(1175, 360, 240, 285, score[4]);
+      stu[5] = new Presentation(1035, 430, 215, 225, score[5]);
+      stu[6] = new Presentation(1660, 390, 140, 195, score[6]);
+      stu[7] = new Presentation(110, 420, 200, 170, score[7]);
       for(let i = 1; i<8; i++){
+        if(score[i]==0){
+          image(gameStuStart[i],0, 0);
+        } else if(score[i]>0 && score[i]<100){
+          image(gameStuIng[i],0,0);
+        } else if(score[i]>=100){
+          image(gameStuEnd[i], 0, 0);
+        }
         stu[i].show();
         if(score[i]>0 && score[i] < 100){
           score[i] -= 0.5;
         } else if(score[i]<=0){
           score[i] = 0;
-        // } else if(score[i]>=100){
-        //   score[i] = 100;
-          // presentationScore += score[i];
         }
         gauge(stu[i], score[i]);
       }
@@ -873,14 +907,12 @@ function draw() {
         stage += 1;
         presentationScore = 700;
       }
-      if(presentationScore >= 600){
-
-      }
       break;
     case border4+7:
       image(week5game[0],0,0);
       textAlign(CENTER);
-      text(presentationScore, width/2, height/2);
+      textSize(30);
+      text(presentationScore/100+' 명을 당신의 발표에 매료시켰다!', width/2, height/2);
       if (presentationScore >= 500){
         normalTime();
       } else if (presentationScore >= 300){
@@ -894,39 +926,46 @@ function draw() {
   
     case border4+8: // good
       switch (innerStage) {
-        case 15:
+        case 16:
           image(answer[5][1][1],0,0);
           afterAnswer();
           break;
-        case 16:
+        case 17:
           image(answer[5][1][2],0,0);
           afterAnswer();
           break;
-        case 17:
+        case 18:
           image(answer[5][1][3],0,0);
+          profUp();
           afterAnswer();
           break;
-        case 18:
+        case 19:
           image(answer[5][1][4],0,0);
-          answerL();
+          loveTiming = 100;
+          afterAnswer();
           break;
+        case 20:
+          image(answer[5][1][5],0,0);
+          teamUp();
+          answerL();
+          buttonM = new Button(0,0,width,height);
       }
       break;
     case border4+9: // soso
     switch (innerStage) {
-      case 15:
+      case 16:
         image(answer[5][2][1],0,0);
         afterAnswer();
         break;
-      case 16:
+      case 17:
         image(answer[5][2][2],0,0);
         afterAnswer();
         break;
-      case 17:
+      case 18:
         image(answer[5][2][3],0,0);
         afterAnswer();
         break;
-      case 18:
+      case 19:
         image(answer[5][2][4],0,0);
         answerM();
         break;
@@ -934,31 +973,41 @@ function draw() {
       break;
     case border4+10: // bad
     switch (innerStage) {
-      case 15:
+      case 16:
         image(answer[5][3][1],0,0);
         afterAnswer();
         break;
-      case 16:
-        image(answer[5][3][2],0,0);
-        afterAnswer();
-        break;
       case 17:
-        image(answer[5][3][3],0,0);
+        image(answer[5][3][2],0,0);
+        teamDown();
         afterAnswer();
         break;
       case 18:
-        image(answer[5][3][4],0,0);
+        image(answer[5][3][3],0,0);
+        loveTiming=100;
         afterAnswer();
         break;
       case 19:
+        image(answer[5][3][4],0,0);
+        profDown();
+        afterAnswer();
+        break;
+      case 20:
         image(answer[5][3][5],0,0);
+        afterAnswer();
+        break;
+      case 21:
+        image(answer[5][3][6],0,0);
+        profDown(0, 17);
+        teamDown(20, 37);
         answerR();
         break;
     }
       break;
 
     case border5: // week 5
-      setNumber(20);
+      setNumber(22);
+      loveTiming = 100;
       if (alpha>0){
         image(choosingtime[1], 0, 0);  
         tint(255,alpha);
@@ -986,44 +1035,44 @@ function draw() {
     
     case border5+3: // ending 1
       switch (innerStage) {
-      case 20:
+      case 22:
         x=0;
         image(ending[1][1],0,0);
         afterAnswer();
         break;
-      case 21:
+      case 23:
         image(ending[1][2],0,0);
         afterAnswer();
         break;
-      case 22:
+      case 24:
         image(ending[1][3],0,0);
         afterAnswer();
         break;
-      case 23:
+      case 25:
         image(ending[1][4],0,0);
         afterAnswer();
         break;
-      case 24:
+      case 26:
         image(ending[1][5],0,0);
         afterAnswer();
         break;
-      case 25:
+      case 27:
         image(ending[1][6],0,0);
         afterAnswer();
         break;
-      case 26:
+      case 28:
         image(ending[1][7],0,0);
         afterAnswer();
         break;
-      case 27:
+      case 29:
         image(ending[1][8],0,0);
         afterAnswer();
         break;
-      case 28:
+      case 30:
         image(ending[1][9],0,0);
         afterAnswer();
         break;
-      case 29:
+      case 31:
         image(ending[1][10],0,0);
         gameTime();
         b3 = new Button(0,0,width,height);
@@ -1032,36 +1081,36 @@ function draw() {
       break;
     case border5+4: // ending 2
     switch (innerStage) {
-      case 20:
+      case 22:
         x=0;
         image(ending[2][1],0,0);
         afterAnswer();
         break;
-      case 21:
+      case 23:
         image(ending[2][2],0,0);
         afterAnswer();
         break;
-      case 22:
+      case 24:
         image(ending[2][3],0,0);
         afterAnswer();
         break;
-      case 23:
+      case 25:
         image(ending[2][4],0,0);
         afterAnswer();
         break;
-      case 24:
+      case 26:
         image(ending[2][5],0,0);
         afterAnswer();
         break;
-      case 25:
+      case 27:
         image(ending[2][6],0,0);
         afterAnswer();
         break;
-      case 26:
+      case 28:
         image(ending[2][7],0,0);
         afterAnswer();
         break;
-      case 27:
+      case 29:
         image(ending[2][8],0,0);
         timeOver();
         buttonR= new Button(0,0,width,height);
@@ -1070,24 +1119,24 @@ function draw() {
       break;
     case border5+5: // ending 3
     switch (innerStage) {
-      case 20:
+      case 22:
         x=0;
         image(ending[3][1],0,0);
         afterAnswer();
         break;
-      case 21:
+      case 23:
         image(ending[3][2],0,0);
         afterAnswer();
         break;
-      case 22:
+      case 24:
         image(ending[3][3],0,0);
         afterAnswer();
         break;
-      case 23:
+      case 25:
         image(ending[3][4],0,0);
         afterAnswer();
         break;
-      case 24:
+      case 26:
         image(ending[3][5],0,0);
         answerL();
         buttonM= new Button(0,0,width,height);
@@ -1096,52 +1145,52 @@ function draw() {
       break;
     case border5+6: // ending 4
     switch (innerStage) {
-      case 20:
+      case 22:
         x=0;
         image(ending[4][1],0,0);
         afterAnswer();
         break;
-      case 21:
+      case 23:
         image(ending[4][2],0,0);
         afterAnswer();
         break;
-      case 22:
+      case 24:
         image(ending[4][3],0,0);
         afterAnswer();
         break;
-      case 23:
+      case 25:
         image(ending[4][4],0,0);
         afterAnswer();
         break;
-      case 24:
+      case 26:
         image(ending[4][5],0,0);
         afterAnswer();
         break;
-      case 25:
+      case 27:
         image(ending[4][6],0,0);
         afterAnswer();
         break;
-      case 26:
+      case 28:
         image(ending[4][7],0,0);
         afterAnswer();
         break;
-      case 27:
+      case 29:
         image(ending[4][8],0,0);
         afterAnswer();
         break;
-      case 28:
+      case 30:
         image(ending[4][9],0,0);
         afterAnswer();
         break;
-      case 29:
+      case 31:
         image(ending[4][10],0,0);
         afterAnswer();
         break;
-      case 30:
+      case 32:
         image(ending[4][11],0,0);
         afterAnswer();
         break;
-      case 31:
+      case 33:
         image(ending[4][12],0,0);
         answerM();
         buttonL = new Button(0,0,width,height);
@@ -1150,48 +1199,48 @@ function draw() {
       break;
     case border5+7: // ending 5
     switch (innerStage) {
-      case 20:
+      case 22:
         x=0;
         image(ending[5][1],0,0);
         afterAnswer();
         break;
-      case 21:
+      case 23:
         image(ending[5][2],0,0);
         afterAnswer();
         break;
-      case 22:
+      case 24:
         image(ending[5][3],0,0);
         afterAnswer();
         break;
-      case 23:
+      case 25:
         image(ending[5][4],0,0);
         afterAnswer();
         break;
-      case 24:
+      case 26:
         image(ending[5][5],0,0);
         afterAnswer();
         break;
-      case 25:
+      case 27:
         image(ending[5][6],0,0);
         afterAnswer();
         break;
-      case 26:
+      case 28:
         image(ending[5][7],0,0);
         afterAnswer();
         break;
-      case 27:
+      case 29:
         image(ending[5][8],0,0);
         afterAnswer();
         break;
-      case 28:
+      case 30:
         image(ending[5][9],0,0);
         afterAnswer();
         break;
-      case 29:
+      case 31:
         image(ending[5][10],0,0);
         afterAnswer();
         break;
-      case 30:
+      case 32:
         image(ending[5][11],0,0);
         answerR();
         b1=new Button(0,0,width,height);
@@ -1202,7 +1251,7 @@ function draw() {
       background(0);
       gameTime();
       image(endingCredit,0,x);
-      if (x > -4800) {x-=1;}
+      if (x > -4800) {if(keyIsPressed && keyCode == 83){x -=6} else{x-=1;}}
       else{
         x=-4800;
         image(lastButton,0,0);
@@ -1216,6 +1265,7 @@ function draw() {
 
     case border5+9: // drawing exhibition
       background(255);
+      image(sketchbook,0,0);
         image(drawings[0],0,0);
         image(drawings[1],640,0);
         image(drawings[2],640*2,0);
@@ -1226,6 +1276,9 @@ function draw() {
         image(drawings[7],640,720);
         image(drawings[8],640*2,720);
         normalTime();
+        textAlign(RIGHT);
+        textSize(25);
+        text('클릭하면 시작화면으로 돌아갑니다!',width-10,height-5);
       break;
     case border5+10:
       stage = 0;
@@ -1235,7 +1288,6 @@ function draw() {
       late = 0;
       x = 0;
       bar = 800;
-      alpha = 255;
       pg_drawing.clear();
       bgm(0);
       for(let i = 1; i<soundAssets.length; i++){
@@ -1417,29 +1469,6 @@ function setNumber(n){
   innerStage = n;
 }
 
-// function fadeOut(img, alpha){
-//   let imgFaded;
-//   alpha = constrain(alpha, 0, 255);
-//   img.loadPixels();
-//   imgFaded.loadPixels();
-//   const NUM_BYTES = imgFaded.pixels.length;
-//   for (let i = 0; i<NUM_BYTES; i_=4){
-//     imgFaded.pixels[i+0] = img.pixels[i+0];
-//     imgFaded.pixels[i+1] = img.pixels[i+1];
-//     imgFaded.pixels[i+2] = img.pixels[i+2];
-//     imgFaded.pixels[i+4] = alpha;
-//   }
-//   imgFaded.updatePixels();
-//   return imgFaded;
-// }
-
-function heartBeat(img) {
-  image(img, 0, 0, width, height);
-  if(frameCount % 20 == 0){
-    image(img, -width/15, -height/15, width*1.1, height*1.1);
-  }
-}
-
 function quake(img){
   if(frameCount%10 >= 0 && frameCount%10 < 2){
     push();
@@ -1464,12 +1493,6 @@ function quake(img){
   } else {
     image(img, 0, 0);
   }
-}
-
-
-function zoomIn(img, sx, sy, zoom){
-  translate(-sx, -sy);
-  image(img, 0, 0, width*zoom, height*zoom);
 }
 
 function particle() {
@@ -1523,49 +1546,68 @@ function bgm(i) {
     soundAssets[i].setVolume(0.5);
   }
 }
-function soundEffect(sound){
-  sound.play();
-  sound.setVolume(0.5);
-}
 
 function profUp(min, max){
+  if (alpha>0){
+    // image(timeTracker, -1000, -540, 1, 1);
+    // frame = timeTracker.getCurrentFrame();
+    // if(frame >= min && frame < max){
+    alpha -= 5;
+  } else if (alpha == 0) {
   profLove += 1;
-  image(timeTracker, -1000, -540, 1, 1);
-  frame = timeTracker.getCurrentFrame();
-  if(frame >= min && frame < max){
+  alpha -= 5;
+  } else {
+    image(blackOpacity,0,0);
     image(loveUp[0], 0, 0);
     image(loveUp[2], 0, -(frameCount%40/5));
     image(loveUp[3], 0, -(frameCount%40/5));
+    alpha -= 5;
   }
 }
+// }
 function profDown(min, max){
+  if (alpha>0){
+    alpha -=5;
+  } else if (alpha == 0){
   profLove -= 1;
-  image(timeTracker, -1000, -540, 1, 1);
-  frame = timeTracker.getCurrentFrame();
-  if(frame >= min && frame < max){
+  alpha -= 5;
+  } else {
+    image(blackOpacity,0,0);
     image(loveDown[0], 0, 0);
     image(loveDown[2], 0, (frameCount%40/5));
     image(loveDown[3], 0, (frameCount%40/5));
+    alpha -=5;
   }
 }
 function teamUp(min, max){
+  if (alpha>0){
+    // image(timeTracker, -1000, -540, 1, 1);
+    // frame = timeTracker.getCurrentFrame();
+    // if(frame >= min && frame < max){
+    alpha -= 5;
+  } else if (alpha == 0) {
   juneLove += 1;
-  image(timeTracker, -1000, -540, 1, 1);
-  frame = timeTracker.getCurrentFrame();
-  if(frame >= min && frame < max){
+  alpha -= 5;
+  } else {
+    image(blackOpacity,0,0);
     image(loveUp[1], 0, 0);
     image(loveUp[2], 0, -(frameCount%40/5));
     image(loveUp[3], 0, -(frameCount%40/5));
+    alpha -= 5;
   }
 }
 function teamDown(min, max){
+  if (alpha>0){
+    alpha -=5;
+  } else if (alpha == 0){
   juneLove -= 1;
-  image(timeTracker, -1000, -540, 1, 1);
-  frame = timeTracker.getCurrentFrame();
-  if(frame >= min && frame < max){
+  alpha -= 5;
+  } else {
+    image(blackOpacity,0,0);
     image(loveDown[1], 0, 0);
     image(loveDown[2], 0, (frameCount%40/5));
     image(loveDown[3], 0, (frameCount%40/5));
+    alpha -=5;
   }
 }
 
@@ -1625,7 +1667,6 @@ function keyPressed() {
     late = 0;
     x = 0;
     bar = 800;
-    alpha = 255;
     pg_drawing.clear();
     bgm(0);
     for(let i = 1; i<soundAssets.length; i++){
@@ -1651,31 +1692,6 @@ function keyPressed() {
   } else if (keyCode === 32 && answerR()){
     stage += 1;
   }
-
-//코드 검토용 키
-  if(keyCode === 48){
-    stage -=1;
-  }
-  else if (keyCode === 49){
-    stage = border;
-  } else if (keyCode === 50){
-    stage = border2;
-  } else if (keyCode === 51){
-    stage = border3;
-  } else if (keyCode === 52){
-    stage = border4;
-  } else if (keyCode === 53){
-    stage = border4+6;
-    presentationScore = 0;
-    stu =[];
-    score = [0, 0, 0, 0, 0, 0, 0, 0];
-    bar = 1000;
-  } else if (keyCode === 54){
-    stage = border5+8;
-  } else if (keyCode === 55){
-    stage = border5+9;
-  }
-
 }
 
 
@@ -1716,5 +1732,23 @@ function sound(){
 
     case border4:bgm(17);break;
     case border4+6:bgm(18); break;
+    case border4+8: switch(innerStage){
+      case 16:bgm(19); break;} break;
+    case border4+9: switch(innerStage){
+      case 16:bgm(20); break;} break;
+    case border4+10: switch(innerStage){
+      case 16:bgm(21); break;} break;
+
+    case border5:bgm(22);break;
+    case border5+3: switch(innerStage){
+      case 21:bgm(23); break;} break;
+    case border5+4: switch(innerStage){
+      case 21:bgm(24); break;} break;
+    case border5+5: switch(innerStage){
+      case 21:bgm(25); break;} break;
+    case border5+6: switch(innerStage){
+      case 21:bgm(26); break;} break;
+    case border5+7: switch(innerStage){
+      case 21:bgm(27); break;} break;
   }
 }
