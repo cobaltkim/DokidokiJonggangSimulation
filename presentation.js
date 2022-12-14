@@ -14,7 +14,7 @@ class Presentation{
     rect(this.x, this.y, this.xpos, this.ypos);
     if (this.x<mouseX && mouseX<this.x+this.xpos && this.y<mouseY && mouseY<this.y+this.ypos){
       fill(0);
-      rect(mouseX, mouseY, 30, 100);
+      rect(mouseX+160, mouseY+20, 30, 100);
     }
     rectMode(CENTER);
   }

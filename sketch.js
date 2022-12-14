@@ -21,13 +21,13 @@ let bar2 = 1000;
 
 let timeTracker;
 let frame;
-
 //assets
 let font;
 let cursor;
 let cursor_over;
 let whiteCursor; 
 let whiteCursor_over;
+let gameCursor;
 let arrow;
 let pen;
 let blackOpacity;
@@ -92,6 +92,7 @@ cursor = loadImage('assets/cursor.png');
 cursor_over = loadImage('assets/cursor_over.png');
 whiteCursor = loadImage('assets/whiteCursor.png');
 whiteCursor_over = loadImage('assets/whiteCursor_over.png');
+gameCursor = loadImage('assets/Week5/Week5_Game_Cursor.png');
 arrow = loadImage('assets/UI_talkpanelarrow.png');
 pen = loadImage('assets/pen.png');
 blackOpacity = loadImage('assets/blackOpacity50.png')
@@ -220,12 +221,13 @@ soundAssets[18] = loadSound('assets/sound/pointCard.mp3'); //w5Game
 soundAssets[19] = loadSound('assets/sound/tongTong.mp3');//w5Best
 soundAssets[20] = loadSound('assets/sound/retroGamer.mp3'); //w5GameSoso
 soundAssets[21] = loadSound('assets/sound/boubleGum.mp3'); //w5GameWorst
-soundAssets[22] = loadSound('assets/sound/funkyAction.mp3'); //enidngSelect
+soundAssets[22] = loadSound('assets/sound/makeItHappen.mp3'); //enidngSelect
 soundAssets[23] = loadSound('assets/sound/rainbow.mp3'); //endingProf
 soundAssets[24] = loadSound('assets/sound/hideSeek.mp3'); //endingTeam
 soundAssets[25] = loadSound('assets/sound/funkyAction.mp3'); //endingExit
 soundAssets[26] = loadSound('assets/sound/loveMe.mp3'); //endingTogether
 soundAssets[27] = loadSound('assets/sound/comic.mp3'); //endingLate
+soundAssets[28] = loadSound('assets/sound/loveMe.mp3');
 }
 
 function setup() {
@@ -354,6 +356,7 @@ function draw() {
     
     case border+0: // week 1
       setNumber(0);
+      loveTiming = 100;
       if (alpha>0){
         image(beforeSelect[1][1], 0, 0);  
         tint(255,alpha);
@@ -880,7 +883,7 @@ function draw() {
       image(week5game[0],0,0);
       gameTime();
       stu[1] = new Presentation(175, 405, 400, 475, score[1]);
-      stu[2] = new Presentation(1280, 375, 350, 515, score[2]);
+      stu[2] = new Presentation(1410, 415, 250, 515, score[2]);
       stu[3] = new Presentation(490, 375, 230, 260, score[3]);
       stu[4] = new Presentation(1175, 360, 240, 285, score[4]);
       stu[5] = new Presentation(1035, 430, 215, 225, score[5]);
@@ -900,6 +903,7 @@ function draw() {
         } else if(score[i]<=0){
           score[i] = 0;
         }
+        if(stu[i].stuOver()){image(gameCursor, mouseX, mouseY);}
         gauge(stu[i], score[i]);
       }
       loadingBar2();
@@ -989,7 +993,6 @@ function draw() {
         break;
       case 19:
         image(answer[5][3][4],0,0);
-        profDown();
         afterAnswer();
         break;
       case 20:
@@ -998,9 +1001,9 @@ function draw() {
         break;
       case 21:
         image(answer[5][3][6],0,0);
-        profDown(0, 17);
-        teamDown(20, 37);
+        profDown();
         answerR();
+        b1 = new Button(0,0,width,height);
         break;
     }
       break;
@@ -1548,66 +1551,66 @@ function bgm(i) {
 }
 
 function profUp(min, max){
-  if (alpha>0){
+  if (loveTiming == 100){
+    profLove += 1;
+    loveTiming -= 5;
     // image(timeTracker, -1000, -540, 1, 1);
     // frame = timeTracker.getCurrentFrame();
     // if(frame >= min && frame < max){
-    alpha -= 5;
-  } else if (alpha == 0) {
-  profLove += 1;
-  alpha -= 5;
+  } else if (loveTiming >= 50) {
+    loveTiming -= 5;
   } else {
     image(blackOpacity,0,0);
     image(loveUp[0], 0, 0);
     image(loveUp[2], 0, -(frameCount%40/5));
     image(loveUp[3], 0, -(frameCount%40/5));
-    alpha -= 5;
+    loveTiming -= 5;
   }
 }
 // }
 function profDown(min, max){
-  if (alpha>0){
-    alpha -=5;
-  } else if (alpha == 0){
-  profLove -= 1;
-  alpha -= 5;
+  if (loveTiming == 100){
+    profLove -= 1;
+    loveTiming -=5;
+  } else if (loveTiming >= 50){
+  loveTiming -= 5;
   } else {
     image(blackOpacity,0,0);
     image(loveDown[0], 0, 0);
     image(loveDown[2], 0, (frameCount%40/5));
     image(loveDown[3], 0, (frameCount%40/5));
-    alpha -=5;
+    loveTiming -=5;
   }
 }
 function teamUp(min, max){
-  if (alpha>0){
+  if (loveTiming == 100){
     // image(timeTracker, -1000, -540, 1, 1);
     // frame = timeTracker.getCurrentFrame();
     // if(frame >= min && frame < max){
-    alpha -= 5;
-  } else if (alpha == 0) {
-  juneLove += 1;
-  alpha -= 5;
+    juneLove += 1;
+    loveTiming -= 5;
+  } else if (loveTiming >= 50) {
+  loveTiming -= 5;
   } else {
     image(blackOpacity,0,0);
     image(loveUp[1], 0, 0);
     image(loveUp[2], 0, -(frameCount%40/5));
     image(loveUp[3], 0, -(frameCount%40/5));
-    alpha -= 5;
+    loveTiming -= 5;
   }
 }
 function teamDown(min, max){
-  if (alpha>0){
-    alpha -=5;
-  } else if (alpha == 0){
-  juneLove -= 1;
-  alpha -= 5;
+  if (loveTiming == 100){
+    juneLove -= 1;
+    loveTiming -=5;
+  } else if (loveTiming >= 50){
+  loveTiming -= 5;
   } else {
     image(blackOpacity,0,0);
     image(loveDown[1], 0, 0);
     image(loveDown[2], 0, (frameCount%40/5));
     image(loveDown[3], 0, (frameCount%40/5));
-    alpha -=5;
+    loveTiming -=5;
   }
 }
 
@@ -1615,7 +1618,7 @@ function gauge(object, score){
   if(object.stuOver()){
     rectMode(CORNER);
     fill(255, 200, 200);
-    rect(mouseX, mouseY+100-score, 30, score);
+    rect(mouseX+160, mouseY+120-score, 30, score);
     rectMode(CENTER);
   }
 }
@@ -1642,10 +1645,10 @@ function mouseClicked() {
     stage += 1;sound();
   } else if (stage == border5+2){
       if (buttonL.over()||buttonM.over()||buttonR.over()){
-        if (late >= 2) stage = border5+7;
-        else if (profLove >= 1 && juneLove >= 1) stage = border5+6;
-        else if (profLove >= 1) stage = border5+3;
-        else if (juneLove >= 1) stage = border5+4;
+        if (late >= 2) {stage = border5+7; sound();}
+        else if (profLove >= 1 && juneLove >= 1) {stage = border5+6; sound();}
+        else if (profLove >= 1) {stage = border5+3; sound();}
+        else if (juneLove >= 1) {stage = border5+4; sound();}
         else stage = border5+5;
         }
     } else {
@@ -1741,14 +1744,15 @@ function sound(){
 
     case border5:bgm(22);break;
     case border5+3: switch(innerStage){
-      case 21:bgm(23); break;} break;
+      case 22:bgm(23); break;} break;
     case border5+4: switch(innerStage){
-      case 21:bgm(24); break;} break;
+      case 22:bgm(24); break;} break;
     case border5+5: switch(innerStage){
-      case 21:bgm(25); break;} break;
+      case 22:bgm(25); break;} break;
     case border5+6: switch(innerStage){
-      case 21:bgm(26); break;} break;
+      case 22:bgm(26); break;} break;
     case border5+7: switch(innerStage){
-      case 21:bgm(27); break;} break;
+      case 22:bgm(27); break;} break;
+    case border5+8: bgm(28); break;
   }
 }
